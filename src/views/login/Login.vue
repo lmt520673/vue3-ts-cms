@@ -1,5 +1,7 @@
 <template>
-  <div id="login"></div>
+  <div id="login">
+    <h1>登录</h1>
+  </div>
 </template>
 
 

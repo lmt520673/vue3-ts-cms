@@ -4,12 +4,20 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: 'login',
-      component: () => import('@/views/login.vue')
+      path: '/',
+      redirect: '/main'
     },
     {
-      path: 'main',
-      component: () => import('@/views/Main.vue')
+      path: '/login',
+      component: () => import('@/views/login/Login.vue')
+    },
+    {
+      path: '/main',
+      component: () => import('@/views/main/Main.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/views/not-found/NotFound.vue')
     }
   ]
 })
