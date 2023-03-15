@@ -62,7 +62,7 @@ watch(isRememberPsd, (newVal) => {
 const paneAccountRef = ref<InstanceType<typeof PaneAccount>>()
 function handleLoginBtn() {
   if (activeName.value === 'account') {
-    paneAccountRef.value?.loginAction(isRememberPsd.value)
+    paneAccountRef.value?.login(isRememberPsd.value)
   } else {
     console.log('哈哈哈哈手机')
   }
