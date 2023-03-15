@@ -15,8 +15,11 @@ interface IState {
   captchaImage: string
   uuid: string
   userInfo: any
-  routes: any[]
+  userMenus: any[]
 }
+
+const USER_INFO = 'USER_INFO'
+const USER_MENUS = 'USER_MENUS'
 
 const useLoginStore = defineStore('login', {
   state: (): IState => {
@@ -26,8 +29,8 @@ const useLoginStore = defineStore('login', {
       token: localCache.getCache(LOGIN_TOKEN) ?? '',
       captchaImage: '',
       uuid: '',
-      userInfo: {},
-      routes: []
+      userInfo: localCache.getCache(USER_INFO) ?? {},
+      userMenus: localCache.getCache(USER_MENUS) ?? []
     }
   },
   actions: {
@@ -40,27 +43,41 @@ const useLoginStore = defineStore('login', {
     //登录事件
     async loginAction(account: ILoginAccount) {
       //调取登录接口  执行登录逻辑
+
+      //拿到token
       const res = await accountLoginRequest(account)
+      this.token = res.token
+      localCache.setCache(LOGIN_TOKEN, this.token)
+
+      //拿到用户信息
+      const userInfo = await getLoginInfoRequest()
+      this.userInfo = userInfo.user
+      localCache.setCache(USER_INFO, userInfo.user)
       // this.id = res.data.id
       // this.name = res.data.name
-      this.token = res.token
 
+      //拿到用户菜单
+      const meusResult = await getLoginMenusRequest()
+      this.userMenus = meusResult.data
+      localCache.setCache(USER_MENUS, meusResult.data)
+      // console.log(meusResult)
       //本地存储token值
-      localCache.setCache(LOGIN_TOKEN, this.token)
+
+      // localCache.setCache(USER_MENUS, )
 
       //跳转到主页
       router.push('/main')
-    },
-    async loginUserInfoAction() {
-      const res = await getLoginInfoRequest()
-      this.userInfo = res.user
-    },
-
-    async loginMenusInfoAction() {
-      const res = await getLoginMenusRequest()
-      this.routes = res.data
-      console.log(this.routes)
     }
+    // async loginUserInfoAction() {
+    //   const res = await getLoginInfoRequest()
+    //   this.userInfo = res.user
+    // },
+
+    // async loginMenusInfoAction() {
+    //   const res = await getLoginMenusRequest()
+    //   this.routes = res.data
+    //   console.log(this.routes)
+    // }
   }
 })
 

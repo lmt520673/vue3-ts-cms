@@ -46,8 +46,8 @@ const account = reactive<ILoginAccount>({
 // 2.定义校验规则
 const rules: FormRules = {
   username: [
-    { required: true, message: '用户名不能为空', trigger: 'blur' },
-    { pattern: /^[0-9A-Za-z]{5,20}$/, message: '用户名长度需在5~20位之间', trigger: 'blur' }
+    { required: true, message: '用户名不能为空', trigger: 'blur' }
+    // { pattern: /^[0-9A-Za-z]{5,20}$/, message: '用户名长度需在5~20位之间', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
@@ -82,11 +82,10 @@ function login(isRememberPsd: boolean) {
         } else {
           localCache.removeCache(LOGIN_ACCOUNT)
         }
-        router.push('/main')
-        //3.4向服务器获取用户信息
-        loginStore.loginUserInfoAction()
+        // router.push('/main')
+        // loginStore.loginUserInfoAction()
 
-        loginStore.loginMenusInfoAction()
+        // loginStore.loginMenusInfoAction()
       })
     } else {
       ElMessage.error('请输入正确的格式之后再进行登录')

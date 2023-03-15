@@ -56,7 +56,7 @@ const activeName = ref('account')
 const isRememberPsd = ref<boolean>(localCache.getCache('isRememberPsd') ?? false)
 
 watch(isRememberPsd, (newVal) => {
-  localCache.setCache('isRememberPsd', newVal)
+  localCache.setCache('IS_REMEMBER_PSD', newVal)
 })
 //拿到paneAccount的组件实例
 const paneAccountRef = ref<InstanceType<typeof PaneAccount>>()

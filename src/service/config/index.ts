@@ -13,7 +13,7 @@ let BASE_URL = ''
 if (import.meta.env.PROD) {
   BASE_URL = 'http://codercba.prod:8000'
 } else {
-  BASE_URL = 'http://vue.ruoyi.vip/prod-api'
+  BASE_URL = 'http://huazc.free.idcfengye.com/'
 }
 
 // console.log(BASE_URL)
