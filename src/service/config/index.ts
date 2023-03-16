@@ -13,7 +13,7 @@ let BASE_URL = ''
 if (import.meta.env.PROD) {
   BASE_URL = 'http://codercba.prod:8000'
 } else {
-  BASE_URL = 'http://huazc.free.idcfengye.com/'
+  BASE_URL = 'http://192.168.0.108:8080'
 }
 
 // console.log(BASE_URL)

@@ -1,37 +1,14 @@
 <template>
   <div class="main">
     <el-container class="main-container">
-      <el-aside width="210px" class="main-aside">
-        <div class="logo">
-          <img src="@/assets/imgs/logo.svg" alt="" />
-          <span class="title">宏源后台管理系统</span>
-        </div>
-        <el-menu
-          class="el-menu-vertical-demo"
-          background-color="#304156"
-          text-color="#bfcbd9"
-          active-text-color="#409eff"
-        >
-          <template v-for="subItem in menus">
-            <el-sub-menu>
-              <template #title>
-                <el-icon> <component :is="subItem.meta.icon" /></el-icon>
-                <span>{{ subItem.meta.title }}</span>
-              </template>
-              <template v-for="menuItem in subItem.children">
-                <el-menu-item index="">
-                  <template #title>
-                    <span>{{ menuItem.meta.title }}</span>
-                  </template>
-                </el-menu-item>
-              </template>
-            </el-sub-menu>
-          </template>
-        </el-menu>
+      <el-aside :width="isCollapse ? '60px' : '210px'">
+        <nav-menu :isCollapse="isCollapse"></nav-menu>
       </el-aside>
       <el-container>
-        <el-header height="40px" class="main-header">Header</el-header>
-        <el-main class="main-content">Main</el-main>
+        <el-header height="60px">
+          <nav-header @handleCollapseChange="handleCollapseChange"></nav-header>
+        </el-header>
+        <!-- <el-main class="main-content">Main</el-main> -->
       </el-container>
     </el-container>
   </div>
@@ -39,14 +16,18 @@
 
 
 <script setup lang="ts">
+import NavMenu from '@/components/nav-menu/NavMenu.vue'
+import NavHeader from '@/components/nav-header/NavHeader.vue'
 import { LOGIN_TOKEN } from '@/global/constants'
 import router from '@/router'
-import useLoginStore from '@/store/login/login'
+
 import { localCache } from '@/utils/cache'
+import { ref } from 'vue'
 
-const loginStore = useLoginStore()
-
-const menus = loginStore.userMenus
+const isCollapse = ref(false)
+function handleCollapseChange(isFold: boolean) {
+  isCollapse.value = isFold
+}
 
 // function handleExitBtn() {
 //   localCache.removeCache(LOGIN_TOKEN)
@@ -60,43 +41,32 @@ const menus = loginStore.userMenus
   height: 100%;
   .main-container {
     height: 100%;
-    .main-aside {
-      // height: 100%;
+    .el-aside {
+      overflow-x: hidden;
+      overflow-y: auto;
+      line-height: 200px;
+      text-align: left;
+      cursor: pointer;
       background-color: #304156;
-      .logo {
-        text-align: center;
-        height: 30px;
-        img {
-          height: 100%;
-        }
-        .title {
-          font-weight: 700;
-          font-size: 16px;
-          color: #fff;
-          line-height: 30px;
-          margin-left: 10px;
-        }
+      transition: width 0.3s linear;
+      scrollbar-width: none; /* firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+
+      &::-webkit-scrollbar {
+        display: none;
       }
     }
-    .main-header {
-      background-color: aquamarine;
+
+    .el-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
     .main-content {
       background-color: rebeccapurple;
     }
   }
-}
-
-:deep(.el-menu--inline) {
-  background-color: #1f2d3d;
-}
-
-// :deep(.el-submenu__title):hover {
-//   background-color: #ff0000;
-//   color: #fff;
-// }
-
-:deep(.el-menu-item):hover {
-  background-color: #001528;
 }
 </style>
