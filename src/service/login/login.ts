@@ -1,11 +1,11 @@
 import hyRequest from '..'
 import type { ILoginAccount } from '@/types'
 
-export function getCaptchaImageRequest() {
-  return hyRequest.get({
-    url: '/captchaImage'
-  })
-}
+// export function getCaptchaImageRequest() {
+//   return hyRequest.get({
+//     url: '/captchaImage'
+//   })
+// }
 
 export function accountLoginRequest(account: ILoginAccount) {
   return hyRequest.post({
@@ -14,14 +14,14 @@ export function accountLoginRequest(account: ILoginAccount) {
   })
 }
 
-export function getLoginInfoRequest() {
+export function getLoginInfoRequest(id: string) {
   return hyRequest.get({
-    url: '/getInfo'
+    url: `/users/${id}`
   })
 }
 
-export function getLoginMenusRequest() {
+export function getLoginMenusRequest(roleId: string) {
   return hyRequest.get({
-    url: '/getRouters'
+    url: `/role/${roleId}/menu`
   })
 }

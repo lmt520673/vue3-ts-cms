@@ -11,15 +11,15 @@
       :collapse="isCollapse"
     >
       <template v-for="subItem in menus">
-        <el-sub-menu :index="subItem.name">
+        <el-sub-menu :index="subItem.id + ''">
           <template #title>
-            <el-icon> <component :is="subItem.meta.icon" /></el-icon>
-            <span>{{ subItem.meta.title }}</span>
+            <el-icon> <component :is="subItem.icon.split('-icon-')[1]" /></el-icon>
+            <span>{{ subItem.name }}</span>
           </template>
           <template v-for="menuItem in subItem.children">
-            <el-menu-item :index="menuItem.name">
+            <el-menu-item :index="menuItem.id + ''" @click="handleMenuItemClick(menuItem)">
               <template #title>
-                <span>{{ menuItem.meta.title }}</span>
+                <span>{{ menuItem.name }}</span>
               </template>
             </el-menu-item>
           </template>
@@ -31,6 +31,7 @@
 
 
 <script setup lang="ts">
+import router from '@/router'
 import useLoginStore from '@/store/login/login'
 const loginStore = useLoginStore()
 const menus = loginStore.userMenus
@@ -42,6 +43,10 @@ defineProps({
     required: true
   }
 })
+
+function handleMenuItemClick(menuItem: any) {
+  router.push(menuItem.url)
+}
 </script>
 
 

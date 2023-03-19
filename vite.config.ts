@@ -21,5 +21,17 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    port: 8000,
+    open: true,
+    cors: true,
+    proxy: {
+      '/dev': {
+        target: 'http://192.168.0.108:8080', //实际请求地址
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/dev/, '')
+      }
+    }
   }
 })

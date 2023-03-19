@@ -1,6 +1,4 @@
 export interface ILoginAccount {
-  username: string
+  name: string
   password: string
-  code: string
-  uuid: string
 }

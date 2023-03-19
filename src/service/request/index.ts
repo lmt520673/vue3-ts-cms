@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { HYRequestConfig } from './type'
+// import { Message } from '@element-plus/icons-vue/dist/types'
 
 // 拦截器: 蒙版Loading/token/修改配置
 
@@ -33,6 +34,9 @@ class HYRequest {
     )
     this.instance.interceptors.response.use(
       (res) => {
+        if (res.data.code !== 1) {
+          ElMessage.error(res.data.msg)
+        }
         return res.data
       },
       (err) => {

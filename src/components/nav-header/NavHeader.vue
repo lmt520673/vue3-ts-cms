@@ -24,7 +24,7 @@
           <el-dropdown>
             <span class="info-avatar">
               <el-avatar :size="30" src="@/assets/imgs/logo.svg" />
-              <span>{{ loginStore.userInfo.nickName }}</span>
+              <span>{{ loginStore.userInfo.name }}</span>
             </span>
             <template #dropdown>
               <el-dropdown-menu>
