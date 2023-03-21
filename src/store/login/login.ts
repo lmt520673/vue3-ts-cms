@@ -9,6 +9,7 @@ import type { ILoginAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '@/global/constants'
 import router from '@/router'
+import { getUserMenusMapMenu } from '@/utils/menus-map'
 
 interface IState {
   id: string
@@ -61,11 +62,19 @@ const useLoginStore = defineStore('login', {
 
       //拿到用户菜单
       const meusResult = await getLoginMenusRequest(roleId)
-      this.userMenus = meusResult.data
+      const userMenus = meusResult.data
+      this.userMenus = userMenus
       localCache.setCache(USER_MENUS, meusResult.data)
 
-      //跳转到主页
+      getUserMenusMapMenu(userMenus)
+
       router.push('/main')
+    },
+    loadLocalRoutes() {
+      // this.token = localCache.getCache(LOGIN_TOKEN)
+      // this.userInfo = localCache.getCache(USER_INFO)
+      // this.userMenus = localCache.getCache(USER_MENUS)
+      getUserMenusMapMenu(localCache.getCache(USER_MENUS))
     }
   }
 })

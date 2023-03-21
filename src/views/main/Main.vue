@@ -8,7 +8,9 @@
         <el-header height="60px">
           <nav-header @handleCollapseChange="handleCollapseChange"></nav-header>
         </el-header>
-        <!-- <el-main class="main-content">Main</el-main> -->
+        <el-main class="main-content">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -18,21 +20,12 @@
 <script setup lang="ts">
 import NavMenu from '@/components/nav-menu/NavMenu.vue'
 import NavHeader from '@/components/nav-header/NavHeader.vue'
-import { LOGIN_TOKEN } from '@/global/constants'
-import router from '@/router'
-
-import { localCache } from '@/utils/cache'
 import { ref } from 'vue'
 
 const isCollapse = ref(false)
 function handleCollapseChange(isFold: boolean) {
   isCollapse.value = isFold
 }
-
-// function handleExitBtn() {
-//   localCache.removeCache(LOGIN_TOKEN)
-//   router.push('/login')
-// }
 </script>
 
 
@@ -64,9 +57,9 @@ function handleCollapseChange(isFold: boolean) {
       background-color: #fff;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
-    .main-content {
-      background-color: rebeccapurple;
-    }
+    // .main-content {
+    //   background-color: rebeccapurple;
+    // }
   }
 }
 </style>

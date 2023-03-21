@@ -15,17 +15,8 @@ const router = createRouter({
     },
     {
       path: '/main',
-      component: () => import('@/views/main/Main.vue'),
-      children: [
-        {
-          path: '/main/analysis/overview',
-          component: () => import('../views/main/analysis/overview/Overview.vue')
-        },
-        {
-          path: '/main/analysis/dashboard',
-          component: () => import('../views/main/analysis/dashboard/Dashboard.vue')
-        }
-      ]
+      name: 'main',
+      component: () => import('@/views/main/Main.vue')
     },
     {
       path: '/:pathMatch(.*)*',
@@ -37,6 +28,9 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   if (to.path.startsWith('/main') && !localCache.getCache(LOGIN_TOKEN)) {
     return '/login'
+  }
+  if (to.path === '/main') {
+    return '/main/analysis/dashboard'
   }
 })
 

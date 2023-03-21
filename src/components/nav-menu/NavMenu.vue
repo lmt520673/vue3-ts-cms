@@ -9,6 +9,7 @@
       background-color="#304156"
       text-color="#bfcbd9"
       :collapse="isCollapse"
+      :default-active="defaultActive + ''"
     >
       <template v-for="subItem in menus">
         <el-sub-menu :index="subItem.id + ''">
@@ -31,8 +32,13 @@
 
 
 <script setup lang="ts">
+import { USER_MENUS } from '@/global/constants'
 import router from '@/router'
 import useLoginStore from '@/store/login/login'
+import { localCache } from '@/utils/cache'
+import { getMenuIdByUserMenus } from '@/utils/menus-map'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 const loginStore = useLoginStore()
 const menus = loginStore.userMenus
 
@@ -47,6 +53,12 @@ defineProps({
 function handleMenuItemClick(menuItem: any) {
   router.push(menuItem.url)
 }
+
+const defaultActive = ref('62')
+const route = useRoute()
+// console.log(getMenuIdByUserMenus(localCache.getCache(USER_MENUS), route.path))
+
+defaultActive.value = getMenuIdByUserMenus(localCache.getCache(USER_MENUS), route.path)
 </script>
 
 
