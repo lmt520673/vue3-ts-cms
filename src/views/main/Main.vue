@@ -57,9 +57,6 @@ function handleCollapseChange(isFold: boolean) {
       background-color: #fff;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
-    // .main-content {
-    //   background-color: rebeccapurple;
-    // }
   }
 }
 </style>

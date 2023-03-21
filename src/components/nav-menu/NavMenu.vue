@@ -11,7 +11,7 @@
       :collapse="isCollapse"
       :default-active="defaultActive + ''"
     >
-      <template v-for="subItem in menus">
+      <template v-for="subItem in userMenus">
         <el-sub-menu :index="subItem.id + ''">
           <template #title>
             <el-icon> <component :is="subItem.icon.split('-icon-')[1]" /></el-icon>
@@ -39,9 +39,12 @@ import { localCache } from '@/utils/cache'
 import { getMenuIdByUserMenus } from '@/utils/menus-map'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-const loginStore = useLoginStore()
-const menus = loginStore.userMenus
 
+//拿到用户菜单进行遍历
+const loginStore = useLoginStore()
+const userMenus = loginStore.userMenus
+
+//定义是否折叠
 defineProps({
   isCollapse: {
     type: Boolean,
@@ -50,15 +53,15 @@ defineProps({
   }
 })
 
+//点击路由进行跳转
 function handleMenuItemClick(menuItem: any) {
   router.push(menuItem.url)
 }
 
-const defaultActive = ref('62')
+//设置菜单的选中项
+const defaultActive = ref('')
 const route = useRoute()
-// console.log(getMenuIdByUserMenus(localCache.getCache(USER_MENUS), route.path))
-
-defaultActive.value = getMenuIdByUserMenus(localCache.getCache(USER_MENUS), route.path)
+defaultActive.value = getMenuIdByUserMenus(userMenus, route.path)
 </script>
 
 

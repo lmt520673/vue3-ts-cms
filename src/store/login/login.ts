@@ -9,7 +9,7 @@ import type { ILoginAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '@/global/constants'
 import router from '@/router'
-import { getUserMenusMapMenu } from '@/utils/menus-map'
+import { getUserMenusMapRoutes } from '@/utils/menus-map'
 
 interface IState {
   id: string
@@ -66,15 +66,24 @@ const useLoginStore = defineStore('login', {
       this.userMenus = userMenus
       localCache.setCache(USER_MENUS, meusResult.data)
 
-      getUserMenusMapMenu(userMenus)
-
+      const routesList = getUserMenusMapRoutes(userMenus)
+      routesList.forEach((item) => {
+        router.addRoute('main', item)
+      })
       router.push('/main')
     },
+    // 目的是为了刷新之后防止路由丢失，重新添加路由
     loadLocalRoutes() {
-      // this.token = localCache.getCache(LOGIN_TOKEN)
-      // this.userInfo = localCache.getCache(USER_INFO)
-      // this.userMenus = localCache.getCache(USER_MENUS)
-      getUserMenusMapMenu(localCache.getCache(USER_MENUS))
+      const token = localCache.getCache(LOGIN_TOKEN)
+      const userInfo = localCache.getCache(USER_INFO)
+      const userMenus = localCache.getCache(USER_MENUS)
+      //这个判断是为了如果在login页面刷新的话  就不执行if语句中的添加路由逻辑
+      if (token && userInfo && userMenus) {
+        const routesList = getUserMenusMapRoutes(userMenus)
+        routesList.forEach((item) => {
+          router.addRoute('main', item)
+        })
+      }
     }
   }
 })
