@@ -6,7 +6,14 @@
       </el-icon>
     </div>
     <div class="header-right">
-      <div class="breadcrumb">面包屑</div>
+      <div class="breadcrumb">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+          <el-breadcrumb-item>promotion management</el-breadcrumb-item>
+          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <div class="user-info">
         <div class="info-icon">
           <span class="bell">
@@ -85,6 +92,7 @@ const loginStore = useLoginStore()
 
 const dialogVisible = ref(false)
 
+//退出登录逻辑
 function handleConfirm() {
   localCache.removeCache(LOGIN_TOKEN)
   localCache.removeCache(USER_INFO)
