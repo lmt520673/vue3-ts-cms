@@ -58,5 +58,8 @@ function handleCollapseChange(isFold: boolean) {
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
   }
+  .main-content {
+    background-color: #f5f5f5;
+  }
 }
 </style>

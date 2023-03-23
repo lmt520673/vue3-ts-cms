@@ -1,26 +1,15 @@
 <template>
   <div class="app">
-    <router-view></router-view>
-    <!-- <h1>APP</h1> -->
-    <!-- <router-link to="login">登录</router-link> -->
-    <!-- <router-link to="main">主页</router-link> -->
-
-    <!-- <el-row class="mb-4">
-      <el-button>Default</el-button>
-      <el-button type="primary">Primary</el-button>
-      <el-button type="success">Success</el-button>
-      <el-button type="info">Info</el-button>
-      <el-button type="warning">Warning</el-button>
-      <el-button type="danger">Danger</el-button>
-    </el-row> -->
-
-    <!-- <router-view></router-view> -->
+    <el-config-provider :locale="zhCn">
+      <router-view></router-view>
+    </el-config-provider>
   </div>
 </template>
 
 
 
 <script setup lang="ts">
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 // 确定环境的几种方式
 // 方式一：手动注释：开发时注释生产环境的，打包时注释开发环境的（但是很有可能手误）
 // export const API_BASE_URL = 'https://coderwhy/org/dev'
