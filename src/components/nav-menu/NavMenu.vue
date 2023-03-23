@@ -32,10 +32,8 @@
 
 
 <script setup lang="ts">
-import { USER_MENUS } from '@/global/constants'
 import router from '@/router'
 import useLoginStore from '@/store/login/login'
-import { localCache } from '@/utils/cache'
 import { getMenuIdByUserMenus } from '@/utils/menus-map'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
