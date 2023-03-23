@@ -8,10 +8,15 @@
     <div class="header-right">
       <div class="breadcrumb">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion management</el-breadcrumb-item>
+          <template v-for="item in breadcrumbsList" :key="item.name">
+            <el-breadcrumb-item :to="item.path">
+              {{ item.name }}
+            </el-breadcrumb-item>
+          </template>
+
+          <!-- <el-breadcrumb-item>promotion management</el-breadcrumb-item>
           <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+          <el-breadcrumb-item>promotion detail</el-breadcrumb-item> -->
         </el-breadcrumb>
       </div>
       <div class="user-info">
@@ -54,6 +59,7 @@
       </div>
     </div>
 
+    <!-- 退出系统弹窗 -->
     <el-dialog v-model="dialogVisible" title="提示" width="30%">
       <!-- <template #default> -->
       <div class="dialog-content">
@@ -77,18 +83,16 @@ import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '@/global/constants'
 import router from '@/router'
 import useLoginStore from '@/store/login/login'
 import { localCache } from '@/utils/cache'
-import { ref } from 'vue'
+import { mapPathToBreadcrumbs } from '@/utils/menus-map'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const isFold = ref(false)
-
 const emit = defineEmits(['handleCollapseChange'])
-
 function handleCollapse() {
   isFold.value = !isFold.value
   emit('handleCollapseChange', isFold.value)
 }
-
-const loginStore = useLoginStore()
 
 const dialogVisible = ref(false)
 
@@ -99,6 +103,15 @@ function handleConfirm() {
   localCache.removeCache(USER_MENUS)
   router.push('/login')
 }
+
+//获取面包屑列表
+const loginStore = useLoginStore()
+const userMenus = loginStore.userMenus
+const route = useRoute()
+const breadcrumbsList = computed(() => {
+  return mapPathToBreadcrumbs(userMenus, route.path)
+})
+// const breadcrumbsList = mapPathToBreadcrumbs(userMenus, route.path)
 </script>
 
 

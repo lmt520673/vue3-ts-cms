@@ -37,7 +37,7 @@ import router from '@/router'
 import useLoginStore from '@/store/login/login'
 import { localCache } from '@/utils/cache'
 import { getMenuIdByUserMenus } from '@/utils/menus-map'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 //拿到用户菜单进行遍历
@@ -59,9 +59,10 @@ function handleMenuItemClick(menuItem: any) {
 }
 
 //设置菜单的选中项
-const defaultActive = ref('')
 const route = useRoute()
-defaultActive.value = getMenuIdByUserMenus(userMenus, route.path)
+const defaultActive = computed(() => {
+  return getMenuIdByUserMenus(userMenus, route.path)
+})
 </script>
 
 
